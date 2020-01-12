@@ -10,7 +10,7 @@ var confidence = 0.6;
 // car: 'gs://vision_api_test_330/test1.jpeg'
 // var pic = 'gs://vision_api_test_330/test1.jpeg';
  
-const fileName = './test1.jpeg';
+const fileName = './test1.png';
 // detect car 
 // return True if its a car
 const labelDectection = async () => {
@@ -18,7 +18,7 @@ const labelDectection = async () => {
         // Creates a client
         const client = new vision.ImageAnnotatorClient();
 
-        const fileName = './test1.jpeg';
+        const fileName = './test1.png';
         const request = {
             image: {content: fs.readFileSync(fileName)},
           };          
@@ -27,6 +27,7 @@ const labelDectection = async () => {
         const objects = result.localizedObjectAnnotations;
         var res;
         objects.forEach(object => {
+            console.log(object);
             if (object.name=="Car"){
                 res = {
                         "isCar": true, 
