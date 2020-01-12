@@ -22,11 +22,11 @@ MongoClient.connect(url, function(err, client) {
 	// This reads a value from the db
 	var cursor = db.collection('names').find({});
 	function iterateFunc(doc) {
-   console.log(JSON.stringify(doc, null, 4));
+    console.log(JSON.stringify(doc, null, 4));
 	}
 
 	function errorFunc(error) {
-	   console.log(error);
+		console.log(error);
 	}
 
 	cursor.forEach(iterateFunc, errorFunc);
