@@ -49,7 +49,7 @@ const labelDectection = async (path) => {
 // };
 // return false if not detecting a car or error
 // return licence plate if confidence >0.6 and isCar == true 
-const licenseDectection = async (path) =>{
+export const licenseDectection = async (path) =>{
     // get label 
     const result = await labelDectection();
     const client = new vision.ImageAnnotatorClient();
@@ -87,4 +87,3 @@ const test = async() =>{
     var t = await licenseDectection();
     console.log(t);
 }
-test();
