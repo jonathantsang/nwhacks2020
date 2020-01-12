@@ -43,6 +43,9 @@ export default class HomeScreen extends React.Component {
        let photo = await this.camera.takePictureAsync();
        var res = await licenseDectection(photo.uri);
        console.log(res);    
+
+       // CALL POST to localhost:8080 here
+       // with image data
      }
   }
 

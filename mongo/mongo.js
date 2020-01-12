@@ -15,6 +15,7 @@ MongoClient.connect(url, function(err, client) {
   db.collection('names').insertOne({
   	name: "vincent wong",
   	qty: 100,
+    license_plate: "123ABC"
 	}).then(function(result) {
 	  // process result
 	})
