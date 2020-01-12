@@ -11,19 +11,18 @@ MongoClient.connect(url, function(err, client) {
 
   const db = client.db("test");
 
-  // This adds a value to the db
-  db.collection('names').insertOne({
-  	name: "vincent wong",
-  	qty: 100,
-    license_plate: "123ABC"
-	}).then(function(result) {
-	  // process result
-	})
+ //  // This adds a value to the db
+ //  db.collection('names').insertOne({
+ //  	name: "Mickey Mouse",
+ //  	qty: 100,
+ //    license_plate: "123ABC"
+	// })
 	
 	// This reads a value from the db
 	var cursor = db.collection('names').find({});
 	function iterateFunc(doc) {
-    console.log(JSON.stringify(doc, null, 4));
+    vals = JSON.stringify(doc, null, 4);
+    console.log(vals);
 	}
 
 	function errorFunc(error) {
@@ -31,5 +30,13 @@ MongoClient.connect(url, function(err, client) {
 	}
 
 	cursor.forEach(iterateFunc, errorFunc);
+
+  // Update value in db
+  var myquery = { name: /^M/ };
+  var newvalues = { $inc: { qty: 3 } };
+  db.collection('names').updateOne(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log("value incremented");
+  });
   client.close();
 });
