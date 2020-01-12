@@ -1,0 +1,2 @@
+1. do command line: export GOOGLE_APPLICATION_CREDENTIALS=""
+2. licence plate: node labellicense.js 

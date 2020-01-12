@@ -11,6 +11,7 @@ import {
   Alert,
   ActivityIndicator
 } from 'react-native';
+import {licenseDectection} from './visionapicall/labellicense';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { MonoText } from './components/StyledText';
@@ -29,15 +30,19 @@ export default class HomeScreen extends React.Component {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
   }
-
+  async test (){
+    const res = await licenseDectection();
+    console.log(res);
+  }
   async snapPhoto() {       
     console.log('Button Pressed');
     if (this.camera) {
        console.log('Taking photo');
        const options = { quality: 1, base64: true, fixOrientation: true, 
        exif: true};
-       let photo = await this.camera.takePictureAsync(options);
-      //  console.log(photo[uri]);    
+       let photo = await this.camera.takePictureAsync();
+       var res = await licenseDectection(photo.uri);
+       console.log(res);    
      }
   }
 
@@ -88,7 +93,8 @@ export default class HomeScreen extends React.Component {
               </View>
             </Camera>
             <TouchableOpacity onPress = {()=>{
-                  this.snapPhoto();
+                  //this.snapPhoto();
+                  this.test();
                   }} >
               <Image style={{marginLeft:180, width:50,height:50}}source={require("./assets/images.png")}/>
             </TouchableOpacity>
@@ -127,10 +133,11 @@ export default class HomeScreen extends React.Component {
                </TouchableOpacity>
              </View>
            </Camera>
-           <TouchableOpacity onPress = {()=>this.snapPhoto()} >
+           <TouchableOpacity onPress = {()=>{
+             //this.snapPhoto();
+              this.test()}} >
              <Image style={{marginLeft:180, width:50,height:50}}source={require("./assets/images.png")}/>
            </TouchableOpacity>
-           <Text style={{textAlign:"center", fontSize:20,fontWeight:"bold"}}>Scan your face</Text>
          </View>
            </View>
           

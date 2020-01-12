@@ -1,6 +1,6 @@
 // Imports the Google Cloud client libraries
 const vision = require('@google-cloud/vision');
-const fs = require('fs');
+// const fs = require('fs');
 
 // adjust confidence value 
 var confidence = 0.6;
@@ -10,17 +10,15 @@ var confidence = 0.6;
 // car: 'gs://vision_api_test_330/test1.jpeg'
 // var pic = 'gs://vision_api_test_330/test1.jpeg';
  
-const fileName = './test1.png';
+// const fileName = './test1.png';
 // detect car 
 // return True if its a car
-const labelDectection = async () => {
+const labelDectection = async (path) => {
     try {
         // Creates a client
         const client = new vision.ImageAnnotatorClient();
-
-        const fileName = './test1.png';
         const request = {
-            image: {content: fs.readFileSync(fileName)},
+            image: {content: path},
           };          
     
         const [result] = await client.objectLocalization(request);
@@ -51,7 +49,7 @@ const labelDectection = async () => {
 // };
 // return false if not detecting a car or error
 // return licence plate if confidence >0.6 and isCar == true 
-const licenseDectection = async () =>{
+export const licenseDectection = async (path) =>{
     // get label 
     const result = await labelDectection();
     const client = new vision.ImageAnnotatorClient();
@@ -60,7 +58,7 @@ const licenseDectection = async () =>{
         return false;
     } else if (result.isCar && result.confidence>confidence){
         return client
-            .textDetection(fileName)
+            .textDetection(path)
             .then(response => {
                 return response[0].fullTextAnnotation.text  
             })
